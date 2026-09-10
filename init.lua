@@ -10,12 +10,10 @@
 -- Core Neovim settings, leaders, options
 -- ============================================================
 
-  --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 require 'custom.options'
 require 'custom.autocmd'
 require 'custom.keymap'
-
-
 
 -- ============================================================
 -- SECTION 4: UI / CORE UX PLUGINS
@@ -507,7 +505,7 @@ do
     vim.lsp.enable(name)
   end
 end
-vim.lsp.enable('rust_analyzer')
+vim.lsp.enable 'rust_analyzer'
 -- ============================================================
 -- SECTION 7: FORMATTING
 -- conform.nvim setup and keymap
@@ -694,20 +692,19 @@ do
   })
 end
 
-
 local run_defaults = {
-  rust   = { F5 = 'cargo run', F6 = 'cargo build --release', F7 = 'cargo test' },
+  rust = { F5 = 'cargo run', F6 = 'cargo build --release', F7 = 'cargo test' },
   python = { F5 = 'python %' },
-  lua    = { F5 = 'lua %' },
+  lua = { F5 = 'lua %' },
 }
 
 -- Parse `.run` in the cwd into { F5 = 'cmd', F6 = 'cmd', ... }
 local function read_run_file()
   local map = {}
-  local f = io.open('.run')
+  local f = io.open '.run'
   if not f then return map end
   for line in f:lines() do
-    local key, cmd = line:match('^%s*(F%d+)%s*=%s*(.-)%s*$')
+    local key, cmd = line:match '^%s*(F%d+)%s*=%s*(.-)%s*$'
     if key and cmd ~= '' then map[key] = cmd end
   end
   f:close()
@@ -717,12 +714,12 @@ end
 local run_buf
 local function run_in_term(cmd)
   if run_buf and vim.api.nvim_buf_is_valid(run_buf) then
-    vim.api.nvim_buf_delete(run_buf, { force = true })   -- kills the previous run too
+    vim.api.nvim_buf_delete(run_buf, { force = true }) -- kills the previous run too
   end
-  vim.cmd('botright 15split')
-  vim.cmd('terminal ' .. vim.fn.expandcmd(cmd))         -- expands % to the current file
+  vim.cmd 'botright 15split'
+  vim.cmd('terminal ' .. vim.fn.expandcmd(cmd)) -- expands % to the current file
   run_buf = vim.api.nvim_get_current_buf()
-  vim.cmd('wincmd p')                                    -- cursor back to your code
+  vim.cmd 'wincmd p' -- cursor back to your code
 end
 
 for n = 1, 12 do
@@ -736,8 +733,6 @@ for n = 1, 12 do
     run_in_term(cmd)
   end, { desc = 'Run .run ' .. key })
 end
-
-
 
 -- ============================================================
 -- SECTION 10: OPTIONAL EXAMPLES / NEXT STEPS
@@ -763,16 +758,16 @@ do
   vim.pack.add {
     gh 'folke/snacks.nvim',
     gh 'folke/persistence.nvim',
-    
   }
 
-  require('persistence').setup {}  -- saves a session per project folder on exit
+  require('persistence').setup {} -- saves a session per project folder on exit
 
   require('snacks').setup {
     dashboard = {
       enabled = true,
       picker = { enabled = true },
       explorer = { enabled = true },
+      bigfile = { enabled = true },
       sections = {
         { section = 'header' },
         { section = 'keys', gap = 1, padding = 1 },
@@ -789,28 +784,25 @@ do
   vim.keymap.set('n', '<leader>fp', function() Snacks.picker.projects() end, { desc = '[F]ind [P]roject' })
   vim.keymap.set('n', '<leader>e', function() Snacks.explorer() end, { desc = 'File explorer' })
 
-vim.pack.add { gh 'akinsho/bufferline.nvim' }
+  vim.pack.add { gh 'akinsho/bufferline.nvim' }
 
-vim.o.showtabline = 2   -- always show the line, even with one buffer
+  vim.o.showtabline = 2 -- always show the line, even with one buffer
 
-require('bufferline').setup {
-  options = {
-    diagnostics = 'nvim_lsp',          -- error and warning counts on each tab
-    offsets = { { filetype = 'snacks_layout_box' } },  -- shift right when the explorer is open
-    always_show_bufferline = true,
-  },
-}
+  require('bufferline').setup {
+    options = {
+      diagnostics = 'nvim_lsp', -- error and warning counts on each tab
+      offsets = { { filetype = 'snacks_layout_box' } }, -- shift right when the explorer is open
+      always_show_bufferline = true,
+    },
+  }
 
-vim.keymap.set('n', '<S-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Previous buffer' })
-vim.keymap.set('n', '<S-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<leader>bp', '<cmd>BufferLineTogglePin<cr>', { desc = '[B]uffer [P]in' })
-vim.keymap.set('n', '<leader>bo', '<cmd>BufferLineCloseOthers<cr>', { desc = '[B]uffer close [O]thers' })
-vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end, { desc = '[B]uffer [D]elete' })
-vim.keymap.set('n', '<leader>bD', function() Snacks.bufdelete.other() end, { desc = '[B]uffer delete others' })
+  vim.keymap.set('n', '<S-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Previous buffer' })
+  vim.keymap.set('n', '<S-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
+  vim.keymap.set('n', '<leader>bp', '<cmd>BufferLineTogglePin<cr>', { desc = '[B]uffer [P]in' })
+  vim.keymap.set('n', '<leader>bo', '<cmd>BufferLineCloseOthers<cr>', { desc = '[B]uffer close [O]thers' })
+  vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end, { desc = '[B]uffer [D]elete' })
+  vim.keymap.set('n', '<leader>bD', function() Snacks.bufdelete.other() end, { desc = '[B]uffer delete others' })
 
-
-
-  
   -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
   -- For independent modules, uncomment the convenience loader:
