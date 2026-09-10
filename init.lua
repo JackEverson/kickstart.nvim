@@ -1060,11 +1060,36 @@ do
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug'
-  -- require 'kickstart.plugins.indent_line'
+  require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
 
+  -- testing plugins, move this to its own files
+  vim.pack.add {
+    gh 'folke/snacks.nvim',
+    gh 'folke/persistence.nvim',
+  }
+
+  require('persistence').setup {}  -- saves a session per project folder on exit
+
+  require('snacks').setup {
+    dashboard = {
+      enabled = true,
+      sections = {
+        { section = 'header' },
+        { section = 'keys', gap = 1, padding = 1 },
+        { pane = 2, icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
+        { pane = 2, icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
+        { section = 'startup' },
+      },
+    },
+  }
+
+  vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazy[g]it' })
+  vim.keymap.set('n', '<leader>rs', function() require('persistence').load() end, { desc = '[R]estore [S]ession for this folder' })
+  vim.keymap.set('n', '<leader>rl', function() require('persistence').load { last = true } end, { desc = '[R]estore [L]ast session' })
+  
   -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
   -- For independent modules, uncomment the convenience loader:
