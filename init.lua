@@ -1020,6 +1020,17 @@ local function read_run_file()
   return map
 end
 
+local run_buf
+local function run_in_term(cmd)
+  if run_buf and vim.api.nvim_buf_is_valid(run_buf) then
+    vim.api.nvim_buf_delete(run_buf, { force = true })   -- kills the previous run too
+  end
+  vim.cmd('botright 15split')
+  vim.cmd('terminal ' .. vim.fn.expandcmd(cmd))         -- expands % to the current file
+  run_buf = vim.api.nvim_get_current_buf()
+  vim.cmd('wincmd p')                                    -- cursor back to your code
+end
+
 for n = 1, 12 do
   local key = 'F' .. n
   vim.keymap.set('n', '<' .. key .. '>', function()
