@@ -1076,6 +1076,8 @@ do
   require('snacks').setup {
     dashboard = {
       enabled = true,
+      picker = { enabled = true },
+      explorer = { enabled = true },
       sections = {
         { section = 'header' },
         { section = 'keys', gap = 1, padding = 1 },
@@ -1089,6 +1091,8 @@ do
   vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazy[g]it' })
   vim.keymap.set('n', '<leader>rs', function() require('persistence').load() end, { desc = '[R]estore [S]ession for this folder' })
   vim.keymap.set('n', '<leader>rl', function() require('persistence').load { last = true } end, { desc = '[R]estore [L]ast session' })
+  vim.keymap.set('n', '<leader>fp', function() Snacks.picker.projects() end, { desc = '[F]ind [P]roject' })
+  vim.keymap.set('n', '<leader>e', function() Snacks.explorer() end, { desc = 'File explorer' })
   
   -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
