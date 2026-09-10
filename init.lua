@@ -1071,6 +1071,7 @@ do
   vim.pack.add {
     gh 'folke/snacks.nvim',
     gh 'folke/persistence.nvim',
+    
   }
 
   require('persistence').setup {}  -- saves a session per project folder on exit
@@ -1096,9 +1097,27 @@ do
   vim.keymap.set('n', '<leader>fp', function() Snacks.picker.projects() end, { desc = '[F]ind [P]roject' })
   vim.keymap.set('n', '<leader>e', function() Snacks.explorer() end, { desc = 'File explorer' })
 
-  vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Previous buffer' })
-  vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
-  vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[B]uffer [D]elete' })
+vim.pack.add { gh 'akinsho/bufferline.nvim' }
+
+vim.o.showtabline = 2   -- always show the line, even with one buffer
+
+require('bufferline').setup {
+  options = {
+    diagnostics = 'nvim_lsp',          -- error and warning counts on each tab
+    offsets = { { filetype = 'snacks_layout_box' } },  -- shift right when the explorer is open
+    always_show_bufferline = true,
+  },
+}
+
+vim.keymap.set('n', '<S-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<S-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', '<cmd>BufferLineTogglePin<cr>', { desc = '[B]uffer [P]in' })
+vim.keymap.set('n', '<leader>bo', '<cmd>BufferLineCloseOthers<cr>', { desc = '[B]uffer close [O]thers' })
+vim.keymap.set('n', '<leader>bd', function() Snacks.bufdelete() end, { desc = '[B]uffer [D]elete' })
+vim.keymap.set('n', '<leader>bD', function() Snacks.bufdelete.other() end, { desc = '[B]uffer delete others' })
+
+
+
   
   -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
