@@ -813,7 +813,7 @@ do
     vim.lsp.enable(name)
   end
 end
-
+vim.lsp.enable('rust_analyzer')
 -- ============================================================
 -- SECTION 7: FORMATTING
 -- conform.nvim setup and keymap
