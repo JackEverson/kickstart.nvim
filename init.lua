@@ -1095,6 +1095,10 @@ do
   vim.keymap.set('n', '<leader>rl', function() require('persistence').load { last = true } end, { desc = '[R]estore [L]ast session' })
   vim.keymap.set('n', '<leader>fp', function() Snacks.picker.projects() end, { desc = '[F]ind [P]roject' })
   vim.keymap.set('n', '<leader>e', function() Snacks.explorer() end, { desc = 'File explorer' })
+
+  vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Previous buffer' })
+  vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
+  vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = '[B]uffer [D]elete' })
   
   -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
