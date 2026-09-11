@@ -5,11 +5,11 @@ require 'custom.options'
 
 require 'custom.autocmd'
 require 'custom.keymap'
-require 'custom.plugins.kickstart'
+require 'custom.lsp'
+require 'custom.kickstart'
 
 require 'custom.plugins'
 
-vim.lsp.enable 'rust_analyzer'
 
 --  Uncomment any of the lines below to enable them (you will need to restart nvim).
 --
