@@ -29,7 +29,7 @@ local function run_in_term(cmd)
   vim.cmd 'wincmd p' -- cursor back to your code
 end
 
-for n = 1, 12 do
+for n = 5, 12 do
   local key = 'F' .. n
   vim.keymap.set('n', '<' .. key .. '>', function()
     local cmd = read_run_file()[key] or (run_defaults[vim.bo.filetype] or {})[key]
