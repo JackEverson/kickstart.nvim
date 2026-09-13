@@ -17,9 +17,21 @@ vim.pack.add {
 
 -- Basic debugging keymaps, feel free to change to your liking!
 vim.keymap.set('n', '<F5>', function() require('dap').continue() end, { desc = 'Debug: Start/Continue' })
-vim.keymap.set('n', '<F8>', function() require('dap').step_into() end, { desc = 'Debug: Step Into' })
-vim.keymap.set('n', '<F9>', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
-vim.keymap.set('n', '<F10>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
+-- Only step when a thread is actually stopped. Otherwise the previous step is still in
+-- flight and nvim-dap would prompt 'Select thread to step in' with a stale thread list.
+local function step(fn)
+  return function()
+    local s = require('dap').session()
+    if s and s.stopped_thread_id then
+      fn()
+    else
+      vim.notify('Debugger is still running - wait for it to stop', vim.log.levels.WARN)
+    end
+  end
+end
+vim.keymap.set('n', '<F8>', step(function() require('dap').step_into() end), { desc = 'Debug: Step Into' })
+vim.keymap.set('n', '<F9>', step(function() require('dap').step_over() end), { desc = 'Debug: Step Over' })
+vim.keymap.set('n', '<F10>', step(function() require('dap').step_out() end), { desc = 'Debug: Step Out' })
 vim.keymap.set('n', '<leader>b', function() require('dap').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
 vim.keymap.set('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
 -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
