@@ -23,3 +23,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- Keep the selection after indenting, so you can press < or > repeatedly.
 vim.keymap.set('x', '<', '<gv', { desc = 'Indent left and keep selection' })
 vim.keymap.set('x', '>', '>gv', { desc = 'Indent right and keep selection' })
+
+
+-- Yank file name
+vim.keymap.set('n', '<leader>yfp', function() vim.fn.setreg('+', vim.fn.expand '%:p') end, { desc = '[Y]ank [F]ile [P]ath' })
+vim.keymap.set('n', '<leader>yfn', function() vim.fn.setreg('+', vim.fn.expand '%:t') end, { desc = '[Y]ank [F]ile [N]ame' })
