@@ -8,7 +8,8 @@ local ls = require 'luasnip'
 local s, f = ls.snippet, ls.function_node
 ls.add_snippets('all', {
   s('date', f(function() return os.date '%Y-%m-%d' end)),
-  s('datetime', f(function() return os.date '%Y-%m-%d %H:%M' end)),
+  s('time', f(function() return os.date '%H%M' end)),
+  -- s('datetime', f(function() return os.date '%Y-%m-%d %H%M' end)),
 })
 
 
