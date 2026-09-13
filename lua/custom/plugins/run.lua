@@ -29,9 +29,9 @@ local function run_in_term(cmd)
   vim.cmd 'wincmd p' -- cursor back to your code
 end
 
-for n = 5, 12 do
+for n = 1, 12 do
   local key = 'F' .. n
-  vim.keymap.set('n', '<' .. key .. '>', function()
+  vim.keymap.set('n', '<leader><' .. key .. '>', function()
     local cmd = read_run_file()[key] or (run_defaults[vim.bo.filetype] or {})[key]
     if not cmd then
       vim.notify(key .. ' is not set in .run for this project', vim.log.levels.WARN)
