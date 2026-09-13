@@ -70,3 +70,13 @@ vim.api.nvim_create_autocmd('PackChanged', {
 ---@param repo string
 ---@return string
 function gh(repo) return 'https://github.com/' .. repo end
+
+
+
+-- spell check on in certain files
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'text', 'gitcommit' },
+  callback = function()
+    vim.wo.spell = true
+  end,
+})
