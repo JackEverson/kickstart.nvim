@@ -90,16 +90,12 @@ end
 --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
 --  - ci'  - [C]hange [I]nside [']quote
 require('mini.ai').setup {
-
   n_lines = 500,
-
+  mappings = { around_next = 'aa', inside_next = 'ii'},
   custom_textobjects = {
-
     e = function() -- [e]ntire buffer
       return {
-
         from = { line = 1, col = 1 },
-
         to = { line = vim.fn.line '$', col = math.max(vim.fn.getline('$'):len(), 1) },
       }
     end,
