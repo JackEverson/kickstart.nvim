@@ -289,7 +289,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  pyright = {},
+  -- pyright = {},
+  basedpyright = {},
   -- tsc = {},
   --
   -- Some languages (like rust) have entire language plugins that can be useful:
