@@ -114,8 +114,9 @@ require('mason-nvim-dap').setup {
           program = cargo_binary,
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
-          terminal = 'integrated',
-
+          
+          -- terminal = 'integrated',
+          console = 'internalConsole',
           -- args = { '--flag', 'value' },
         },
       }
