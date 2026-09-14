@@ -40,6 +40,17 @@ vim.keymap.set('n', '<F7>', function() require('dapui').toggle() end, { desc = '
 local dap = require 'dap'
 local dapui = require 'dapui'
 
+local dap = require 'dap'
+local dapui = require 'dapui'
+
+local is_win = vim.fn.has 'win32' == 1
+
+if is_win then
+  -- codelldb can't capture debuggee stdio on Windows; give it its own terminal window
+  dap.defaults.fallback.external_terminal = { command = 'wt.exe', args = {} }
+end
+
+
 -- Build with cargo and locate the binary, so <F5> needs no path prompt.
 -- Returns a coroutine so the build can run without freezing the editor;
 -- nvim-dap resumes it and waits for us to hand back the path. See `:help dap-configuration`.
@@ -84,7 +95,7 @@ local function cargo_binary()
       if not name then return abort() end
     end
 
-    local exe = vim.fn.has 'win32' == 1 and '.exe' or ''
+    local exe = is_win == 1 and '.exe' or ''
     coroutine.resume(dap_run_co, data.target_directory .. '/debug/' .. name .. exe)
   end)
 end
@@ -114,9 +125,9 @@ require('mason-nvim-dap').setup {
           program = cargo_binary,
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
-          
+          terminal = is_win and 'external' or 'console',
           -- terminal = 'integrated',
-          console = 'internalConsole',
+          -- console = 'internalConsole',
           -- args = { '--flag', 'value' },
         },
       }
