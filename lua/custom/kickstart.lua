@@ -334,6 +334,8 @@ local servers = {
   },
 }
 
+if vim.fn.executable 'python3' == 1 or vim.fn.executable 'python' == 1 then servers.basedpyright = {} end
+
 vim.pack.add {
   gh 'neovim/nvim-lspconfig',
   gh 'mason-org/mason.nvim',
