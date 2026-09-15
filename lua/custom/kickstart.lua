@@ -289,8 +289,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
-  basedpyright = {},
   -- tsc = {},
   --
   -- Some languages (like rust) have entire language plugins that can be useful:
@@ -334,6 +332,7 @@ local servers = {
   },
 }
 
+-- add language support depending if that language is available
 if vim.fn.executable 'python3' == 1 or vim.fn.executable 'python' == 1 then servers.basedpyright = {} end
 
 vim.pack.add {
