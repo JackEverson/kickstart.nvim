@@ -25,6 +25,7 @@ local function run_in_term(cmd)
   vim.cmd 'botright 15split'
   vim.cmd('terminal ' .. vim.fn.expandcmd(cmd)) -- expands % to the current file
   run_buf = vim.api.nvim_get_current_buf()
+  vim.cmd 'normal! G'
   vim.cmd 'wincmd p' -- cursor back to your code
 end
 
@@ -50,3 +51,4 @@ end
 
 vim.keymap.set('n', '<leader>rq', close_run, { desc = '[R]un: [Q]uit terminal' })
 vim.keymap.set('n', 'q', close_run, { buffer = run_buf, desc = 'Close run terminal' })
+
