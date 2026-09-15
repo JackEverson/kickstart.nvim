@@ -1,4 +1,3 @@
-
 local run_defaults = {
   rust = { F5 = 'cargo run', F6 = 'cargo build --release', F7 = 'cargo test' },
   python = { F5 = 'python %' },
@@ -40,3 +39,14 @@ for n = 1, 12 do
     run_in_term(cmd)
   end, { desc = 'Run .run ' .. key })
 end
+
+local function close_run()
+  if run_buf and vim.api.nvim_buf_is_valid(run_buf) then
+    vim.api.nvim_buf_delete(run_buf, { force = true }) -- kills the process and closes the split
+  end
+
+  run_buf = nil
+end
+
+vim.keymap.set('n', '<leader>rq', close_run, { desc = '[R]un: [Q]uit terminal' })
+vim.keymap.set('n', 'q', close_run, { buffer = run_buf, desc = 'Close run terminal' })
