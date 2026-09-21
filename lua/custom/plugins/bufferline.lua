@@ -14,3 +14,5 @@ vim.keymap.set('n', '<S-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Previous 
 vim.keymap.set('n', '<S-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>bp', '<cmd>BufferLineTogglePin<cr>', { desc = '[B]uffer [P]in' })
 vim.keymap.set('n', '<leader>bo', '<cmd>BufferLineCloseOthers<cr>', { desc = '[B]uffer close [O]thers' })
+vim.keymap.set('n', '<S-right>', '<cmd>BufferLineMoveNext<cr>', { desc = 'Move Buffer Tab Right' })
+vim.keymap.set('n', '<S-left>', '<cmd>BufferLineMovePrev<cr>', { desc = 'Move Buffer Tab Left' })

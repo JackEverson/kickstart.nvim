@@ -100,16 +100,10 @@ local function cargo_binary()
   end)
 end
 
-
-
-
 require('mason-nvim-dap').setup {
   -- Makes a best effort to setup the various debuggers with
   -- reasonable debug configurations
   automatic_installation = true,
-
-
-
 
 
   -- You can provide additional configuration to the handlers,
@@ -126,6 +120,7 @@ require('mason-nvim-dap').setup {
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
           terminal = is_win and 'external' or 'console',
+          -- terminal = 'console',
           -- terminal = 'integrated',
           -- console = 'internalConsole',
           -- args = { '--flag', 'value' },
