@@ -8,10 +8,10 @@ local set = vim.keymap.set
 -- [[ Building a set of cursors ]]
 
 -- Add or skip a cursor on the line above/below.
-set({ 'n', 'x' }, '<up>', function() mc.lineAddCursor(-1) end, { desc = 'Multicursor: add above' })
-set({ 'n', 'x' }, '<down>', function() mc.lineAddCursor(1) end, { desc = 'Multicursor: add below' })
-set({ 'n', 'x' }, '<leader><up>', function() mc.lineSkipCursor(-1) end, { desc = 'Multicursor: skip above' })
-set({ 'n', 'x' }, '<leader><down>', function() mc.lineSkipCursor(1) end, { desc = 'Multicursor: skip below' })
+set({ 'n', 'x' }, '<C-Up>', function() mc.lineAddCursor(-1) end, { desc = 'Multicursor: add above' })
+set({ 'n', 'x' }, '<C-Down>', function() mc.lineAddCursor(1) end, { desc = 'Multicursor: add below' })
+set({ 'n', 'x' }, '<leader><C-Up>', function() mc.lineSkipCursor(-1) end, { desc = 'Multicursor: skip above' })
+set({ 'n', 'x' }, '<leader><C-Down>', function() mc.lineSkipCursor(1) end, { desc = 'Multicursor: skip below' })
 
 -- Add a cursor at the next match of the word (or visual selection) under the cursor.
 set({ 'n', 'x' }, '<C-n>', function() mc.matchAddCursor(1) end, { desc = 'Multicursor: add at next match' })

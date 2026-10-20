@@ -32,6 +32,8 @@ vim.keymap.set('n', '<leader>yfn', function() vim.fn.setreg('+', vim.fn.expand '
 -- moving via wrapped line not file line
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = 'Down (wrapped line)' })
 vim.keymap.set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = 'Up (wrapped line)' })
+vim.keymap.set({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = 'Down (wrapped line)' })
+vim.keymap.set({ 'n', 'x' }, '<Up>',   "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = 'Up (wrapped line)' })
 
 vim.keymap.set('i', '<Down>', '<C-o>gj', { silent = true, desc = 'Down (wrapped line)' })
 vim.keymap.set('i', '<Up>',   '<C-o>gk', { silent = true, desc = 'Up (wrapped line)' })
