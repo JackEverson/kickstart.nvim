@@ -28,3 +28,11 @@ vim.keymap.set('x', '>', '>gv', { desc = 'Indent right and keep selection' })
 -- Yank file name
 vim.keymap.set('n', '<leader>yfp', function() vim.fn.setreg('+', vim.fn.expand '%:p') end, { desc = '[Y]ank [F]ile [P]ath' })
 vim.keymap.set('n', '<leader>yfn', function() vim.fn.setreg('+', vim.fn.expand '%:t') end, { desc = '[Y]ank [F]ile [N]ame' })
+
+-- moving via wrapped line not file line
+vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = 'Down (wrapped line)' })
+vim.keymap.set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = 'Up (wrapped line)' })
+
+vim.keymap.set('i', '<Down>', '<C-o>gj', { silent = true, desc = 'Down (wrapped line)' })
+vim.keymap.set('i', '<Up>',   '<C-o>gk', { silent = true, desc = 'Up (wrapped line)' })
+
