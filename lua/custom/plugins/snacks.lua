@@ -22,7 +22,11 @@ require('snacks').setup {
   lazygit = vim.fn.has 'win32' == 1
       and {
         config = {
-          os = { edit = 'nvim --server %NVIM% --remote-tab -- {{filename}}', editAtLine = 'nvim --server %NVIM% --remote-tab +{{line}} -- {{filename}}' },
+          os = { -- lazygit workaround for windows cmd export
+            edit = [[pwsh -NoProfile -Command "nvim --headless --server $env:NVIM --remote-send q; nvim --headless --server $env:NVIM --remote-tab '{{filename}}'"]],
+            editAtLine = [[pwsh -NoProfile -Command "nvim --headless --server $env:NVIM --remote-send q; nvim --headless --server $env:NVIM --remote-tab '{{filename}}'; nvim --headless --server $env:NVIM --remote-send ':{{line}}<CR>'"]],
+            editInTerminal = false,
+          },
         },
       }
     or nil,
