@@ -19,6 +19,13 @@ require('snacks').setup {
   picker = { enabled = true },
   explorer = { enabled = true },
   bigfile = { enabled = true },
+  lazygit = vim.fn.has 'win32' == 1
+      and {
+        config = {
+          os = { edit = 'nvim --server %NVIM% --remote-tab -- {{filename}}', editAtLine = 'nvim --server %NVIM% --remote-tab +{{line}} -- {{filename}}' },
+        },
+      }
+    or nil,
 }
 
 vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazy[g]it' })
