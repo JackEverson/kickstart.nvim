@@ -12,3 +12,50 @@ for file_name, type in vim.fs.dir(plugins_dir, { follow = true }) do
     require('custom.plugins.' .. module)
   end
 end
+
+local nontext = vim.api.nvim_create_augroup('nontext-files', { clear = true })
+
+vim.api.nvim_create_autocmd('BufReadCmd', {
+  group = nontext,
+  pattern = {
+    '*.png',
+    '*.jpg',
+    '*.jpeg',
+    '*.gif',
+    '*.webp',
+    '*.bmp',
+    '*.ico',
+    '*.mp4',
+    '*.mkv',
+    '*.mov',
+    '*.mp3',
+    '*.wav',
+    '*.pdf',
+    '*.docx',
+    '*.xlsx',
+    '*.pptx',
+    '*.zip',
+    '*.7z',
+  },
+  callback = function(ev)
+    vim.ui.open(ev.file)
+    vim.schedule(function() vim.api.nvim_buf_delete(ev.buf, { force = true }) end)
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = nontext,
+  callback = function(ev)
+    for _, line in ipairs(vim.api.nvim_buf_get_lines(ev.buf, 0, 50, false)) do
+      -- The buffer API shows a NUL byte as a newline inside a line.
+      if line:find('\n', 1, true) then
+        vim.bo[ev.buf].modifiable = false
+        vim.bo[ev.buf].readonly = true
+        vim.notify('binary file, opened read-only', vim.log.levels.WARN)
+        return
+      end
+    end
+  end,
+})
+
+vim.keymap.set('n', '<leader>x', function() vim.system({ vim.fn.expand '%:p' }, { detach = true }) end, { desc = 'Launch this file as a program' })
